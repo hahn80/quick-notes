@@ -5,7 +5,7 @@ Collecting of personal notes while working with Pyarrow
 
 
 
-1. Convert a table to batches with designated size:
+## Convert a table to batches with designated size:
 
 
 ```python
