@@ -47,6 +47,15 @@ $$A \times B = \{ (a, b) \mid a \in A, b \in B \}$$
 - **Remark**: This is the set of all possible pairs, obtained by nested iteration over $A$ and $B$. Size: $|A| \times |B|$.
 
 
+### Full Outer Join
+
+Includes all from both $A$ and $B$, with matches or `null`.
+
+- **Definition**:
+$$A \bowtie_{\theta,\text{full}} B = M \cup P_A \cup P_B$$
+  
+- **Remark**: Union the left outer join and right outer join, but since $M$ is shared, no duplicates arise. Equivalently: $(A \bowtie_{\theta,\text{left}} B) \cup (A \bowtie_{\theta,\text{right}} B)$.
+
 
 ### Inner Join
 
@@ -68,6 +77,26 @@ $$A \bowtie_{\theta,\text{left}} B = M \cup P_A$$
 - **Remark**: Union the matched pairs $M$ with padded unmatched from $A$ ($P_A$). This ensures every $a \in A$ appears exactly once: matched if possible, else with `null`.
 
 
+### Left Semi Join
+
+Projects only from $A$ where a match exists.
+
+- **Definition**:
+$$A \ltimes_\theta B = \{ a \in A \mid \exists b \in B \text{ such that } \theta(a, b) \text{ is true} \}$$
+  
+- **Remark**: Project the first component of $M$: $A \ltimes_\theta B = \{ a \mid \exists b \in B: (a, b) \in M \}$. This is the complement of $U_A$ in $A$: $A \setminus U_A$.
+
+
+### Left Anti Join
+
+Projects from $A$ with no match.
+
+- **Definition**:
+$$A \vartriangleleft_\theta B = U_A = \{ a \in A \mid \nexists b \in B \text{ such that } \theta(a, b) \text{ is true} \}$$
+  
+- **Remark**: The complement of the left semi join in $A$: $A \vartriangleleft_\theta B = A \setminus (A \ltimes_\theta B)$.
+
+
 
 ### Right Outer Join
 
@@ -80,27 +109,6 @@ $$A \bowtie_{\theta,\text{right}} B = M \cup P_B$$
 
 
 
-### Full Outer Join
-
-Includes all from both $A$ and $B$, with matches or `null`.
-
-- **Definition**:
-$$A \bowtie_{\theta,\text{full}} B = M \cup P_A \cup P_B$$
-  
-- **Remark**: Union the left outer join and right outer join, but since $M$ is shared, no duplicates arise. Equivalently: $(A \bowtie_{\theta,\text{left}} B) \cup (A \bowtie_{\theta,\text{right}} B)$.
-
-
-### Left Semi Join
-
-Projects only from $A$ where a match exists.
-
-- **Definition**:
-$$A \ltimes_\theta B = \{ a \in A \mid \exists b \in B \text{ such that } \theta(a, b) \text{ is true} \}$$
-  
-- **Remark**: Project the first component of $M$: $A \ltimes_\theta B = \{ a \mid \exists b \in B: (a, b) \in M \}$. This is the complement of $U_A$ in $A$: $A \setminus U_A$.
-
-
-
 ### Right Semi Join
 
 Projects only from $B$ where a match exists.
@@ -109,17 +117,6 @@ Projects only from $B$ where a match exists.
 $$A \rtimes_\theta B = \{ b \in B \mid \exists a \in A \text{ such that } \theta(a, b) \text{ is true} \}$$
   
 - **Remark**: Symmetric to left semi: Project the second component of $M$: $A \rtimes_\theta B = \{ b \mid \exists a \in A: (a, b) \in M \}$. Or $B \setminus U_B$.
-
-
-
-### Left Anti Join
-
-Projects from $A$ with no match.
-
-- **Definition**:
-$$A \vartriangleleft_\theta B = U_A = \{ a \in A \mid \nexists b \in B \text{ such that } \theta(a, b) \text{ is true} \}$$
-  
-- **Remark**: The complement of the left semi join in $A$: $A \vartriangleleft_\theta B = A \setminus (A \ltimes_\theta B)$.
 
 
 
