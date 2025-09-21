@@ -22,29 +22,19 @@ We need the following subsets to represent the different types of joins later.
 
 
 - Matched set (inner join core):
-  $$
-  M = \{ (a, b) \mid a \in A, b \in B, \theta(a, b) \text{ is true} \}
-  $$
+$$M = \{ (a, b) \mid a \in A, b \in B, \theta(a, b) \text{ is true} \}$$
   
 - Unmatched from $A$ (left anti-join projection):
-  $$
-  U_A = \{ a \in A \mid \nexists b \in B \text{ such that } \theta(a, b) \text{ is true} \}
-  $$
+$$U_A = \{ a \in A \mid \nexists b \in B \text{ such that } \theta(a, b) \text{ is true} \}$$
   
 - Unmatched from $B$ (right anti-join projection):
-  $$
-  U_B = \{ b \in B \mid \nexists a \in A \text{ such that } \theta(a, b) \text{ is true} \}
-  $$
+$$U_B = \{ b \in B \mid \nexists a \in A \text{ such that } \theta(a, b) \text{ is true} \}$$
   
 - Padded unmatched from $A$:
-  $$
-  P_A = \{ (a, \text{NULL}) \mid a \in U_A \}
-  $$
+$$P_A = \{ (a, \text{NULL}) \mid a \in U_A \}$$
   
 - Padded unmatched from $B$:
-  $$
-  P_B = \{ (\text{NULL}, b) \mid b \in U_B \}
-  $$
+$$P_B = \{ (\text{NULL}, b) \mid b \in U_B \}$$
 
 
 ### Cross Join (Cartesian Product)
@@ -52,9 +42,7 @@ We need the following subsets to represent the different types of joins later.
 The simplest join, with no condition ($\theta$ is always true).
 
 - **Definition**:
-  $$
-  A \times B = \{ (a, b) \mid a \in A, b \in B \}
-  $$
+$$A \times B = \{ (a, b) \mid a \in A, b \in B \}$$
   
 - **Remark**: This is the set of all possible pairs, obtained by nested iteration over $A$ and $B$. Size: $|A| \times |B|$.
 
@@ -65,9 +53,7 @@ The simplest join, with no condition ($\theta$ is always true).
 Combines only matching tuples.
 
 - **Definition**:
-  $$
-  A \bowtie_\theta B = M = \{ (a, b) \mid a \in A, b \in B, \theta(a, b) \text{ is true} \}
-  $$
+$$A \bowtie_\theta B = M = \{ (a, b) \mid a \in A, b \in B, \theta(a, b) \text{ is true} \}$$
   
 - **Remark**: Start from the cross join and filter with $\theta$: $A \bowtie_\theta B = \{ (a, b) \in A \times B \mid \theta(a, b) \text{ is true} \}$.
 
@@ -77,9 +63,7 @@ Combines only matching tuples.
 Includes all from $A$, with matches or \(\text{NULL}\).
 
 - **Definition**:
-  $$
-  A \bowtie_{\theta,\text{left}} B = M \cup P_A
-  $$
+$$A \bowtie_{\theta,\text{left}} B = M \cup P_A$$
   
 - **Remark**: Union the matched pairs $M$ with padded unmatched from $A$ ($P_A$). This ensures every $a \in A$ appears exactly once: matched if possible, else with \(\text{NULL}\).
 
@@ -90,9 +74,7 @@ Includes all from $A$, with matches or \(\text{NULL}\).
 Includes all from $B$, with matches or \(\text{NULL}\).
 
 - **Definition**:
-  $$
-  A \bowtie_{\theta,\text{right}} B = M \cup P_B
-  $$
+$$A \bowtie_{\theta,\text{right}} B = M \cup P_B$$
   
 - **Remark**: Similar to left, but union $M$ with padded unmatched from $B$ ($P_B$). Symmetric to left join.
 
@@ -103,9 +85,7 @@ Includes all from $B$, with matches or \(\text{NULL}\).
 Includes all from both $A$ and $B$, with matches or \(\text{NULL}\).
 
 - **Definition**:
-  $$
-  A \bowtie_{\theta,\text{full}} B = M \cup P_A \cup P_B
-  $$
+$$A \bowtie_{\theta,\text{full}} B = M \cup P_A \cup P_B$$
   
 - **Remark**: Union the left outer join and right outer join, but since $M$ is shared, no duplicates arise. Equivalently: $(A \bowtie_{\theta,\text{left}} B) \cup (A \bowtie_{\theta,\text{right}} B)$.
 
@@ -115,9 +95,7 @@ Includes all from both $A$ and $B$, with matches or \(\text{NULL}\).
 Projects only from $A$ where a match exists.
 
 - **Definition**:
-  $$
-  A \ltimes_\theta B = \{ a \in A \mid \exists b \in B \text{ such that } \theta(a, b) \text{ is true} \}
-  $$
+$$A \ltimes_\theta B = \{ a \in A \mid \exists b \in B \text{ such that } \theta(a, b) \text{ is true} \}$$
   
 - **Remark**: Project the first component of $M$: $A \ltimes_\theta B = \{ a \mid \exists b \in B: (a, b) \in M \}$. This is the complement of $U_A$ in $A$: $A \setminus U_A$.
 
@@ -128,9 +106,7 @@ Projects only from $A$ where a match exists.
 Projects only from $B$ where a match exists.
 
 - **Definition**:
-  $$
-  A \rtimes_\theta B = \{ b \in B \mid \exists a \in A \text{ such that } \theta(a, b) \text{ is true} \}
-  $$
+$$A \rtimes_\theta B = \{ b \in B \mid \exists a \in A \text{ such that } \theta(a, b) \text{ is true} \}$$
   
 - **Remark**: Symmetric to left semi: Project the second component of $M$: $A \rtimes_\theta B = \{ b \mid \exists a \in A: (a, b) \in M \}$. Or $B \setminus U_B$.
 
@@ -141,9 +117,7 @@ Projects only from $B$ where a match exists.
 Projects from $A$ with no match.
 
 - **Definition**:
-  $$
-  A \vartriangleleft_\theta B = U_A = \{ a \in A \mid \nexists b \in B \text{ such that } \theta(a, b) \text{ is true} \}
-  $$
+$$A \vartriangleleft_\theta B = U_A = \{ a \in A \mid \nexists b \in B \text{ such that } \theta(a, b) \text{ is true} \}$$
   
 - **Remark**: The complement of the left semi join in $A$: $A \vartriangleleft_\theta B = A \setminus (A \ltimes_\theta B)$.
 
@@ -154,9 +128,7 @@ Projects from $A$ with no match.
 Projects from $B$ with no match.
 
 - **Definition**:
-  $$
-  A \vartriangleright_\theta B = U_B = \{ b \in B \mid \nexists a \in A \text{ such that } \theta(a, b) \text{ is true} \}
-  $$
+$$A \vartriangleright_\theta B = U_B = \{ b \in B \mid \nexists a \in A \text{ such that } \theta(a, b) \text{ is true} \}$$
   
 - **Remark**: Symmetric: $A \vartriangleright_\theta B = B \setminus (A \rtimes_\theta B)$.
 
