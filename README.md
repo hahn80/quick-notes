@@ -1,2 +1,4 @@
-# quick-notes
-Quick Notes for Certain API
+# Quick Notes
+
+Useful Notes to work with some API. Reducing the memory load!
+
