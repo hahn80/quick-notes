@@ -31,10 +31,10 @@ $$U_A = \{ a \in A \mid \nexists b \in B \text{ such that } \theta(a, b) \text{ 
 $$U_B = \{ b \in B \mid \nexists a \in A \text{ such that } \theta(a, b) \text{ is true} \}$$
   
 - Padded unmatched from $A$:
-$$P_A = \{ (a, \text{NULL}) \mid a \in U_A \}$$
+$$P_A = \{ (a, NULL) \mid a \in U_A \}$$
   
 - Padded unmatched from $B$:
-$$P_B = \{ (\text{NULL}, b) \mid b \in U_B \}$$
+$$P_B = \{ (NULL, b) \mid b \in U_B \}$$
 
 
 ### Cross Join (Cartesian Product)
@@ -60,18 +60,18 @@ $$A \bowtie_\theta B = M = \{ (a, b) \mid a \in A, b \in B, \theta(a, b) \text{ 
 
 ### Left Outer Join
 
-Includes all from $A$, with matches or \(\text{NULL}\).
+Includes all from $A$, with matches or `null`.
 
 - **Definition**:
 $$A \bowtie_{\theta,\text{left}} B = M \cup P_A$$
   
-- **Remark**: Union the matched pairs $M$ with padded unmatched from $A$ ($P_A$). This ensures every $a \in A$ appears exactly once: matched if possible, else with \(\text{NULL}\).
+- **Remark**: Union the matched pairs $M$ with padded unmatched from $A$ ($P_A$). This ensures every $a \in A$ appears exactly once: matched if possible, else with `null`.
 
 
 
 ### Right Outer Join
 
-Includes all from $B$, with matches or \(\text{NULL}\).
+Includes all from $B$, with matches or `null`.
 
 - **Definition**:
 $$A \bowtie_{\theta,\text{right}} B = M \cup P_B$$
@@ -82,7 +82,7 @@ $$A \bowtie_{\theta,\text{right}} B = M \cup P_B$$
 
 ### Full Outer Join
 
-Includes all from both $A$ and $B$, with matches or \(\text{NULL}\).
+Includes all from both $A$ and $B$, with matches or `null`.
 
 - **Definition**:
 $$A \bowtie_{\theta,\text{full}} B = M \cup P_A \cup P_B$$
